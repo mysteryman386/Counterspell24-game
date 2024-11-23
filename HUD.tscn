@@ -1,0 +1,99 @@
+[gd_scene load_steps=7 format=3 uid="uid://ccqoreueuxdb7"]
+
+[ext_resource type="Script" path="res://HUD.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://cmvdtsquh181" path="res://images/other.png" id="2_ib7aw"]
+[ext_resource type="Texture2D" uid="uid://dvxkio3dy2bq2" path="res://images/cross.png" id="2_x8l4p"]
+[ext_resource type="Texture2D" uid="uid://5kv7fbbdk1rk" path="res://images/Bud-flanagan.png" id="3_t1nmo"]
+
+[sub_resource type="InputEventAction" id="InputEventAction_fopy7"]
+action = &"start_game"
+
+[sub_resource type="Shortcut" id="4"]
+events = [SubResource("InputEventAction_fopy7")]
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1")
+
+[node name="ScoreLabel" type="Label" parent="."]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 78.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 60
+text = "0"
+horizontal_alignment = 1
+
+[node name="MessageBacking" type="ColorRect" parent="."]
+offset_left = 192.0
+offset_top = 104.0
+offset_right = 640.0
+offset_bottom = 272.0
+color = Color(0, 0, 0, 1)
+
+[node name="MessageLabel" type="Label" parent="."]
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 192.0
+offset_top = -196.0
+offset_right = -160.0
+offset_bottom = -27.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 60
+text = "Trust
+Noone..."
+horizontal_alignment = 1
+
+[node name="StartButton" type="Button" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -96.0
+offset_top = -288.0
+offset_right = 84.0
+offset_bottom = -188.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 60
+shortcut = SubResource("4")
+text = "Start"
+
+[node name="MessageTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_top = 472.0
+offset_right = 1280.0
+offset_bottom = 1752.0
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("2_ib7aw")
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+offset_left = 136.0
+offset_top = 472.0
+offset_right = 659.0
+offset_bottom = 964.0
+scale = Vector2(0.26, 0.26)
+texture = ExtResource("3_t1nmo")
+
+[node name="heart1" type="TextureRect" parent="."]
+offset_top = 472.0
+offset_right = 624.0
+offset_bottom = 1096.0
+scale = Vector2(0.205, 0.205)
+texture = ExtResource("2_x8l4p")
+
+[node name="heart2" type="TextureRect" parent="."]
+offset_left = 144.0
+offset_top = 472.0
+offset_right = 768.0
+offset_bottom = 1096.0
+scale = Vector2(0.205, 0.205)
+texture = ExtResource("2_x8l4p")
+
+[connection signal="pressed" from="StartButton" to="." method="_on_StartButton_pressed"]
+[connection signal="timeout" from="MessageTimer" to="." method="_on_MessageTimer_timeout"]

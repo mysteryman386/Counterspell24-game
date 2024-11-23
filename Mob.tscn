@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://rkdnhqgf2hpj"]
+
+[ext_resource type="Script" path="res://Mob.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://41lans1gjcua" path="res://images/Evil_G_Clark.png" id="2_xhifa"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4t35m"]
+radius = 10.8626
+
+[node name="Mob" type="RigidBody2D" groups=["mobs"]]
+collision_mask = 0
+gravity_scale = 0.0
+script = ExtResource("1")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = 4.71238
+scale = Vector2(0.159452, 0.178659)
+texture = ExtResource("2_xhifa")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 3.14159
+scale = Vector2(-4.16376, 3.6963)
+shape = SubResource("CircleShape2D_4t35m")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]

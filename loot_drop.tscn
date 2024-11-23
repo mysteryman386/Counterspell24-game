@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://gva0aspy1kad"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_25chu"]
+
+[node name="LootDrop" type="RigidBody2D"]
+gravity_scale = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_25chu")

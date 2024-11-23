@@ -1,0 +1,76 @@
+[gd_scene load_steps=12 format=3 uid="uid://cyfwty2q3rdse"]
+
+[ext_resource type="Script" path="res://Main.gd" id="1"]
+[ext_resource type="PackedScene" uid="uid://rkdnhqgf2hpj" path="res://Mob.tscn" id="2"]
+[ext_resource type="PackedScene" uid="uid://4vwrqjegqwpj" path="res://Player.tscn" id="3"]
+[ext_resource type="Texture2D" uid="uid://naea3os7m47" path="res://images/Ultimate_9_Group_Board.png" id="3_6w4uc"]
+[ext_resource type="PackedScene" uid="uid://ccqoreueuxdb7" path="res://HUD.tscn" id="4"]
+[ext_resource type="Script" path="res://camera_2d.gd" id="5_dmppc"]
+[ext_resource type="AudioStream" uid="uid://653lvfo2pemu" path="res://music/letitbegood.mp3" id="7_m738l"]
+[ext_resource type="AudioStream" uid="uid://cys4j0mkpkdu3" path="res://music/RunRabbitRun Instrumental ONLY.mp3" id="8_4dmie"]
+[ext_resource type="AudioStream" uid="uid://nq5rywwfup2m" path="res://music/NewDeathSound_ouch.ogg" id="9_nc57k"]
+[ext_resource type="AudioStream" uid="uid://i7xilk274k6r" path="res://music/Lego yoda death sound.mp3" id="9_oxhce"]
+
+[sub_resource type="Curve2D" id="1"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3320, 0, 0, 0, 0, 0, 3320, 2880, 0, 0, 0, 0, 0, 2880, 0, 0, 0, 0, 0, 0)
+}
+point_count = 5
+
+[node name="Main" type="Node"]
+script = ExtResource("1")
+mob_scene = ExtResource("2")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_right = 3320.0
+offset_bottom = 2880.0
+texture = ExtResource("3_6w4uc")
+
+[node name="Player" parent="." instance=ExtResource("3")]
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+script = ExtResource("5_dmppc")
+
+[node name="MobTimer" type="Timer" parent="."]
+wait_time = 0.5
+
+[node name="ScoreTimer" type="Timer" parent="."]
+
+[node name="StartTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="StartPosition" type="Marker2D" parent="."]
+position = Vector2(1480, 952)
+
+[node name="MobPath" type="Path2D" parent="."]
+curve = SubResource("1")
+
+[node name="MobSpawnLocation" type="PathFollow2D" parent="MobPath"]
+
+[node name="HUD" parent="." instance=ExtResource("4")]
+
+[node name="DeathSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_m738l")
+
+[node name="soundtrack" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_4dmie")
+parameters/looping = true
+
+[node name="DSDelay" type="Timer" parent="."]
+wait_time = 0.3
+one_shot = true
+
+[node name="ouch" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_nc57k")
+
+[node name="yodaDeath" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_oxhce")
+
+[connection signal="hit" from="Player" to="." method="game_over"]
+[connection signal="timeout" from="MobTimer" to="." method="_on_MobTimer_timeout"]
+[connection signal="timeout" from="ScoreTimer" to="." method="_on_ScoreTimer_timeout"]
+[connection signal="timeout" from="StartTimer" to="." method="_on_StartTimer_timeout"]
+[connection signal="start_game" from="HUD" to="." method="new_game"]
+[connection signal="finished" from="soundtrack" to="." method="_on_soundtrack_finished"]
+[connection signal="timeout" from="DSDelay" to="." method="_on_ds_delay_timeout"]
